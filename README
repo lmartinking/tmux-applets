@@ -1,0 +1,4 @@
+tmux-applets
+------------
+
+ * tmux-cpu-freq  -  show cpu frequencies as coloured bars
