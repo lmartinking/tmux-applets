@@ -18,8 +18,8 @@
 #define MAX_CPU_LEVELS	6
 
 /* And you can add colours to this, if needed */
-#define MAX_LEVEL_COLORS 6
-static const char *level_colors[MAX_LEVEL_COLORS] = {
+#define MAX_LEVEL_COLOURS 6
+static const char *level_colours[MAX_LEVEL_COLOURS] = {
 	"red",
 	"yellow",
 	"green",
@@ -116,8 +116,8 @@ int main(int argc, char **argv)
 			}
 		}
 
-		if (level < MAX_LEVEL_COLORS) {
-			colour = level_colors[level];
+		if (level < MAX_LEVEL_COLOURS) {
+			colour = level_colours[level];
 		}
 
 		printf("#[bg=%s]  ", colour);
