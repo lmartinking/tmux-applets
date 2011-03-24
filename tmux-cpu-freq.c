@@ -29,7 +29,7 @@ static const char *level_colours[MAX_LEVEL_COLOURS] = {
 };
 
 #define CPU_FREQ		"/sys/devices/system/cpu/"
-#define FREQ_CUR_FORMAT		CPU_FREQ "cpu/cpu%d/cpufreq/scaling_cur_freq"
+#define FREQ_CUR_FORMAT		CPU_FREQ "cpu%d/cpufreq/scaling_cur_freq"
 #define FREQ_AVAILABLE_PATH	CPU_FREQ "cpu0/cpufreq/scaling_available_frequencies"
 
 static unsigned int cpu_freq(unsigned int cpu)
