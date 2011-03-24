@@ -12,8 +12,8 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 
-#define PING_COUNT	"1"
-#define PING_TIMEOUT	"1"
+#define PING_COUNT	"1"	/* must be a string! */
+#define PING_TIMEOUT	"1"	/* must be a string! */
 
 #define PING_PROG	"/bin/ping"
 
