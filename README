@@ -1,4 +1,21 @@
+------------
 tmux-applets
 ------------
 
  * tmux-cpu-freq  -  show cpu frequencies as coloured bars
+
+
+tmux-cpu-freq
+-------------
+
+	Usage (in ~/.tmux.conf):
+		set-status-right "#(/path/to/tmux-cpu-freq <number-of-cpus>)"
+		set-status-interval 1
+
+Or, you can edit NUMBER_CPUS in tmux-cpu-freq.c before compiling it.
+
+You can also customise the colours by editing the level_colours array,
+and adjusting MAX_LEVEL_COLOURS if need be.
+
+The reason this configuration is static is since tmux must run the applet
+every frequency interval, thus speed is paramount.
