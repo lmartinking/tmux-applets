@@ -6,6 +6,8 @@ tmux-applets
 
  * tmux-ping	  -  show results of pinging a host as coloured boxes
 
+ * tmux-mem	  -  show memory usage as a coloured box
+
 
 Installation
 ------------
@@ -54,6 +56,16 @@ tmux-ping
 
 You can change the colours by editing COLOUR_OKAY and COLOUR_ERROR in
 tmux-ping.c
+
+
+tmux-mem
+--------
+
+	Usage:
+		tmux-mem
+
+Colours can be customised by editing the level_colours array, and adjusting
+MAX_LEVEL_COLOURS if need be.
 
 
 Contact
