@@ -23,12 +23,12 @@ Usage in tmux
 	
 In ~/.tmux.conf, edit your status line:
 
-	set-status-right "#(/path/to/applet <arguments>) #(/path/to/applet2 <arguments>)"
+	set status-right "#(/path/to/applet <arguments>) #(/path/to/applet2 <arguments>)"
 
 For example, in my configuration I have:
 
-	set-status-right "#(/home/lucas/bin/tmux-cpu-freq 6)  "
-	set-status-interval 1
+	set status-right "#(/home/lucas/bin/tmux-cpu-freq 6)  "
+	set status-interval 1
 
 
 tmux-cpu-freq
