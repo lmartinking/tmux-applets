@@ -1,8 +1,12 @@
-CFLAGS=-Os
-CC=gcc
+CC?= gcc
+CFLAGS+=-Os
 STRIP=strip
 
-INSTALL_DIR=/home/$(USER)/bin
+PREFIX?= /usr/local
+INSTALL?= install
+INSTALLDIR= ${INSTALL} -d
+INSTALLBIN= ${INSTALL} -m 555
+INSTALLMAN= ${INSTALL} -m 444
 
 .PHONY: clean all
 
@@ -26,6 +30,7 @@ clean:
 	rm -f tmux-mem
 
 install: all
-	install -D tmux-cpu-freq $(INSTALL_DIR)/tmux-cpu-freq
-	install -D tmux-ping $(INSTALL_DIR)/tmux-ping
-	install -D tmux-mem $(INSTALL_DIR)/tmux-mem
+	${INSTALLDIR} ${DESTDIR}${PREFIX}/bin
+	${INSTALLBIN} tmux-cpu-freq ${DESTDIR}${PREFIX}/bin/
+	${INSTALLBIN} tmux-ping ${DESTDIR}${PREFIX}/bin/
+	${INSTALLBIN} tmux-mem ${DESTDIR}${PREFIX}/bin/
