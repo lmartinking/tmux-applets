@@ -8,6 +8,10 @@ tmux-applets
 
  * tmux-mem	  -  show memory usage as a coloured box
 
+Currently tmux-cpu-freq requires Linux 2.6+ and tmux-mem requires
+Linux 2.4+. If you are able to port them to other kernels please
+send me patches or a pull request :-)
+
 
 Installation
 ------------
