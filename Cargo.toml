@@ -1,0 +1,12 @@
+[package]
+name = "tmux-applets"
+version = "0.0.1"
+edition = "2024"
+
+homepage = "https://github.com/lmartinking/tmux-applets"
+documentation = "https://github.com/lmartinking/tmux-applets"
+repository = "https://github.com/lmartinking/tmux-applets"
+authors = ["Lucas Martin-King <lmartinking@gmail.com>"]
+license = "GPLv2"
+
+[dependencies]
