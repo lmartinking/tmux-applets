@@ -9,8 +9,8 @@ cargo install tmux-applets
 ```
 
 ## Usage in tmux
-	
-In ~/.tmux.conf, edit your status line:
+
+In `~/.tmux.conf`, edit your status line:
 
 ```
 set status-right "#(/path/to/applet <arguments>) #(/path/to/applet2 <arguments>)"
