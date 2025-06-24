@@ -88,16 +88,8 @@ fn cpu_info(cpu_index: u32) -> Result<CPUInfo> {
     let max_freq_path = format!("/sys/bus/cpu/devices/cpu{cpu_index}/cpufreq/scaling_max_freq");
     let cur_freq_path = format!("/sys/bus/cpu/devices/cpu{cpu_index}/cpufreq/scaling_cur_freq");
 
-    match (
-        read_u32_from_file(&min_freq_path),
-        read_u32_from_file(&max_freq_path),
-        read_u32_from_file(&cur_freq_path),
-    ) {
-        (Some(min), Some(max), Some(cur)) => Ok(CPUInfo {
-            min_freq: min,
-            max_freq: max,
-            cur_freq: cur,
-        }),
+    match (read_u32_from_file(&min_freq_path), read_u32_from_file(&max_freq_path), read_u32_from_file(&cur_freq_path)) {
+        (Some(min), Some(max), Some(cur)) => Ok(CPUInfo { min_freq: min, max_freq: max, cur_freq: cur }),
         _ => Err(CPUAppletError::CPUInfoError),
     }
 }
@@ -156,10 +148,7 @@ pub fn applet(args: &[String]) -> Result<()> {
         let c = cpu_freq_hsl(norm, colour_s, colour_l);
         let rgb = Rgb::from(&c);
 
-        eprintln!(
-            "CPU {i} Info: {info} Norm: {norm:.0}% RGB: {}",
-            rgb.to_hex_string()
-        );
+        eprintln!("CPU {i} Info: {info} Norm: {norm:.0}% RGB: {}", rgb.to_hex_string());
 
         print!("#[bg={}]  ", rgb.to_hex_string());
     }
@@ -188,37 +177,9 @@ mod tests {
 
     #[test]
     fn test_normalise_cur_freq() {
-        assert_eq!(
-            0.0,
-            normalise_cur_freq(&CPUInfo {
-                min_freq: 100,
-                max_freq: 200,
-                cur_freq: 99
-            })
-        );
-        assert_eq!(
-            0.0,
-            normalise_cur_freq(&CPUInfo {
-                min_freq: 100,
-                max_freq: 200,
-                cur_freq: 100
-            })
-        );
-        assert_eq!(
-            0.5,
-            normalise_cur_freq(&CPUInfo {
-                min_freq: 100,
-                max_freq: 200,
-                cur_freq: 150
-            })
-        );
-        assert_eq!(
-            1.0,
-            normalise_cur_freq(&CPUInfo {
-                min_freq: 100,
-                max_freq: 200,
-                cur_freq: 201
-            })
-        );
+        assert_eq!(0.0, normalise_cur_freq(&CPUInfo { min_freq: 100, max_freq: 200, cur_freq: 99 }));
+        assert_eq!(0.0, normalise_cur_freq(&CPUInfo { min_freq: 100, max_freq: 200, cur_freq: 100 }));
+        assert_eq!(0.5, normalise_cur_freq(&CPUInfo { min_freq: 100, max_freq: 200, cur_freq: 150 }));
+        assert_eq!(1.0, normalise_cur_freq(&CPUInfo { min_freq: 100, max_freq: 200, cur_freq: 201 }));
     }
 }
