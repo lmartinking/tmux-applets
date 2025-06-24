@@ -1,12 +1,23 @@
 # tmux-applets
 
-This is work-in-progress.
+This is a work-in-progress conversion of the C code to Rust.
 
 ## Installation
 
 ```
 cargo install tmux-applets
 ```
+
+## Applets
+
+Currently implemented:
+
+ * `cpu`: Show CPU frequency usage
+
+TODO:
+
+ * `mem`: Show memory usage
+ * `ping`: Ping a host
 
 ## Usage in tmux
 
