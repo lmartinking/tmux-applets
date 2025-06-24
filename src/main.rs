@@ -41,8 +41,14 @@ fn main() -> Result<()> {
     }
 
     match args[1].as_str() {
-        "-h" | "--help" | "help" => { println!("{USAGE}"); return Ok(()) }
-        "cpu" => { Ok(cpu::applet(&args[2..])?) }
-        _ => { println!("{USAGE}"); return Err(AppletError::MissingArgumentError) }
+        "-h" | "--help" | "help" => {
+            println!("{USAGE}");
+            return Ok(());
+        }
+        "cpu" => Ok(cpu::applet(&args[2..])?),
+        _ => {
+            println!("{USAGE}");
+            return Err(AppletError::MissingArgumentError);
+        }
     }
 }
