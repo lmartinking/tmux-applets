@@ -21,6 +21,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "613afe47fcd5fac7ccf1db93babcb082c5994d996f20b8b159f2ad1658eb5724"
 
 [[package]]
+name = "colorsys"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "aee37dd2dc25d67ce9bca2709c384843c46d1582158ed5e2483d52b6da30e7d8"
+
+[[package]]
 name = "libc"
 version = "0.2.174"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -42,5 +48,6 @@ dependencies = [
 name = "tmux-applets"
 version = "0.0.1"
 dependencies = [
+ "colorsys",
  "nix",
 ]
