@@ -10,7 +10,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, ubuntu-24.04-arm]
 
-    runs-on: ${{ matrix:os }}
+    runs-on: ${{ matrix.os }}
 
     container: docker.io/rust:1.87
 
