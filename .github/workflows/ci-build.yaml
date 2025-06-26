@@ -22,7 +22,7 @@ jobs:
       run: cargo fetch
 
     - name: Run Tests
-      run: cargo test
+      run: cargo test -- --show-output
 
     - name: Build Release
       run: cargo build -r
