@@ -45,10 +45,7 @@ fn read_u32_from_file(path: &str) -> Option<u32> {
 
     let vstr = vstr.trim_end();
 
-    match vstr.parse::<u32>() {
-        Ok(v) => Some(v),
-        Err(_) => return None,
-    }
+    vstr.parse::<u32>().ok()
 }
 
 // convert the current cpu frequency into a percentage, range [0.0, 1.0]
@@ -62,7 +59,7 @@ fn normalise_cur_freq(cpu: &CPUInfo) -> f32 {
     }
     let range = cpu.max_freq - cpu.min_freq;
     let adj = c - cpu.min_freq;
-    return adj as f32 / range as f32;
+    adj as f32 / range as f32
 }
 
 fn pct_to_hue(pct: f32) -> f32 {
@@ -122,14 +119,14 @@ pub fn applet(args: &[String]) -> Result<()> {
 
     for arg in args {
         if let Some(s) = parse_colour_param(arg, "s") {
-            if s >= 0.0 && s <= 100.0 {
+            if (0.0..=100.0).contains(&s) {
                 colour_s = Some(s);
             } else {
                 eprintln!("Saturation {s} out of range [0, 100.0]");
             }
         };
         if let Some(l) = parse_colour_param(arg, "l") {
-            if l >= 0.0 && l <= 100.0 {
+            if (0.0..=100.0).contains(&l) {
                 colour_l = Some(l);
             } else {
                 eprintln!("Lightness {l} out of range [0, 100.0]");

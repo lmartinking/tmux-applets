@@ -24,7 +24,7 @@ impl std::error::Error for AppletError {}
 
 type Result<T> = std::result::Result<T, AppletError>;
 
-const USAGE: &'static str = "
+const USAGE: &str = "
 usage: tmux-applets <applet> [<args>]
 
 available applets:
@@ -47,12 +47,12 @@ fn main() -> Result<()> {
     match args[1].as_str() {
         "-h" | "--help" | "help" => {
             println!("{USAGE}");
-            return Ok(());
+            Ok(())
         }
         "cpu" => Ok(cpu::applet(&args[2..])?),
         _ => {
             println!("{USAGE}");
-            return Err(AppletError::MissingArgumentError);
+            Err(AppletError::MissingArgumentError)
         }
     }
 }
