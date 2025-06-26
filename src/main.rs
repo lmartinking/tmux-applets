@@ -1,10 +1,11 @@
 use std::{env, fmt};
 
-use tmux_applets::cpu;
+use tmux_applets::{cpu, mem};
 
 #[derive(Debug)]
 enum AppletError {
     CPUAppletError(cpu::CPUAppletError),
+    MemAppletError(mem::MemAppletError),
     MissingArgumentError,
 }
 
@@ -17,6 +18,12 @@ impl fmt::Display for AppletError {
 impl From<cpu::CPUAppletError> for AppletError {
     fn from(error: cpu::CPUAppletError) -> Self {
         AppletError::CPUAppletError(error)
+    }
+}
+
+impl From<mem::MemAppletError> for AppletError {
+    fn from(error: mem::MemAppletError) -> Self {
+        AppletError::MemAppletError(error)
     }
 }
 
@@ -34,6 +41,8 @@ available applets:
         optional parameters:
           s:XX.YY set the saturation (eg: s:50.0)
           l:XX.YY set the lightness  (eg: l:75.0)
+
+    mem: show memory usage
 ";
 
 fn main() -> Result<()> {
@@ -49,6 +58,7 @@ fn main() -> Result<()> {
             println!("{USAGE}");
             Ok(())
         }
+        "mem" => Ok(mem::applet(&args[2..])?),
         "cpu" => Ok(cpu::applet(&args[2..])?),
         _ => {
             println!("{USAGE}");
