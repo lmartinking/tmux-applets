@@ -30,12 +30,12 @@ jobs:
     - name: Get Platform Info
       id: platform-info
       run: |
-        echo "kernel=$( uname -s | tr 'A-Z' 'a-z' )" >> $GITHUB_OUTPUT
-        echo "machine=$( uname -m )" >> $GITHUB_OUTPUT
+        echo "kernel=$( uname -s | tr 'A-Z' 'a-z' )" | tee -a $GITHUB_OUTPUT
+        echo "machine=$( uname -m )" | tee -a $GITHUB_OUTPUT
 
     - name: Upload Build (Release)
       uses: actions/upload-artifact@main
       with:
-        name: tmux-applets-${{ steps.platform-info.kernel }}-${{ steps.platform-info.machine }}
+        name: tmux-applets-${{ steps.platform-info.outputs.kernel }}-${{ steps.platform-info.outputs.machine }}
         path: ./target/release/tmux-applets
         if-no-files-found: warn
