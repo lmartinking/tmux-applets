@@ -1,6 +1,10 @@
 use std::fmt;
 use std::fs;
 
+use colorsys::{Rgb};
+
+use crate::common::{parse_colour_param};
+
 #[derive(Debug, PartialEq)]
 pub enum MemAppletError {
     MemInfoError,
@@ -57,10 +61,34 @@ fn read_meminfo() -> Result<MemInfo> {
     Ok(info)
 }
 
-pub fn applet(_args: &[String]) -> Result<()> {
+fn normalise_mem_usage(info: &MemInfo) -> f32 {
+    return info.used as f32 / info.total as f32
+}
+
+pub fn applet(args: &[String]) -> Result<()> {
+    let mut colour_s: Option<f32> = None;
+    let mut colour_l: Option<f32> = None;
+
+    for arg in args {
+        if let Some(s) = parse_colour_param(arg, "s") {
+            if (0.0..=100.0).contains(&s) {
+                colour_s = Some(s);
+            } else {
+                eprintln!("Saturation {s} out of range [0, 100.0]");
+            }
+        };
+        if let Some(l) = parse_colour_param(arg, "l") {
+            if (0.0..=100.0).contains(&l) {
+                colour_l = Some(l);
+            } else {
+                eprintln!("Lightness {l} out of range [0, 100.0]");
+            }
+        }
+    }
+
     let info = read_meminfo()?;
 
-    eprintln!("Mem Info: {:?}", info);
+    eprintln!("Mem Info: {:?} Pct: {:.2}", info, normalise_mem_usage(&info));
 
     Ok(())
 }

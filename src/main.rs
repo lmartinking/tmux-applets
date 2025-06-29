@@ -4,9 +4,9 @@ use tmux_applets::{cpu, mem};
 
 #[derive(Debug)]
 enum AppletError {
+    MissingArgumentError,
     CPUAppletError(cpu::CPUAppletError),
     MemAppletError(mem::MemAppletError),
-    MissingArgumentError,
 }
 
 impl fmt::Display for AppletError {

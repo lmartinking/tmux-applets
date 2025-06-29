@@ -3,7 +3,9 @@ use std::fs;
 
 use nix::unistd;
 
-use colorsys::{Hsl, Rgb};
+use colorsys::{Rgb};
+
+use crate::common::{parse_colour_param, pct_value_hsl};
 
 #[derive(Debug, PartialEq)]
 pub enum CPUAppletError {
@@ -62,24 +64,6 @@ fn normalise_cur_freq(cpu: &CPUInfo) -> f32 {
     adj as f32 / range as f32
 }
 
-fn pct_to_hue(pct: f32) -> f32 {
-    const LEFT_STOP: f32 = 0.0; // Red
-    const RIGHT_STOP: f32 = 120.0; // Green
-    assert!(RIGHT_STOP > LEFT_STOP);
-    // Note: pct is inverted as we want to transition from green to red
-    LEFT_STOP + ((1.0 - pct) * (RIGHT_STOP - LEFT_STOP))
-}
-
-const DEFAULT_SATURATION: f32 = 100.0;
-const DEFAULT_LIGHTNESS: f32 = 50.0;
-
-fn cpu_freq_hsl(norm: f32, s: Option<f32>, l: Option<f32>) -> Hsl {
-    let hue = pct_to_hue(norm);
-    let s = s.unwrap_or(DEFAULT_SATURATION);
-    let l = l.unwrap_or(DEFAULT_LIGHTNESS);
-    Hsl::from((hue, s, l))
-}
-
 fn cpu_info(cpu_index: u32) -> Result<CPUInfo> {
     let min_freq_path = format!("/sys/bus/cpu/devices/cpu{cpu_index}/cpufreq/scaling_min_freq");
     let max_freq_path = format!("/sys/bus/cpu/devices/cpu{cpu_index}/cpufreq/scaling_max_freq");
@@ -95,22 +79,6 @@ impl fmt::Display for CPUInfo {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "CPUInfo: {:?}", self)
     }
-}
-
-// Parse a colour parameter in the form: `{key}:{val}` where `{val}` is a float
-fn parse_colour_param(p: &str, key: &str) -> Option<f32> {
-    let parts: Vec<&str> = p.split(":").collect();
-    if parts.len() != 2 {
-        return None;
-    }
-
-    let k = parts[0];
-    let v = parts[1];
-    if key != k {
-        return None;
-    }
-
-    v.parse::<f32>().ok()
 }
 
 pub fn applet(args: &[String]) -> Result<()> {
@@ -142,7 +110,7 @@ pub fn applet(args: &[String]) -> Result<()> {
         let info = cpu_info(i)?;
         let norm = normalise_cur_freq(&info) * 100.0;
 
-        let c = cpu_freq_hsl(norm, colour_s, colour_l);
+        let c = pct_value_hsl(norm, colour_s, colour_l);
         let rgb = Rgb::from(&c);
 
         eprintln!("CPU {i} Info: {info} Norm: {norm:.0}% RGB: {}", rgb.to_hex_string());
@@ -157,20 +125,6 @@ pub fn applet(args: &[String]) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn test_hsl_to_rgb_red() {
-        let hsl = Hsl::from((0.0, 100.0, 50.0));
-        let rgb: [u8; 3] = Rgb::from(&hsl).into();
-        assert_eq!((255, 0, 0), rgb.into());
-    }
-
-    #[test]
-    fn test_hsl_to_rgb_green() {
-        let hsl = Hsl::from((120.0, 100.0, 50.0));
-        let rgb: [u8; 3] = Rgb::from(&hsl).into();
-        assert_eq!((0, 255, 0), rgb.into());
-    }
 
     #[test]
     fn test_normalise_cur_freq() {
