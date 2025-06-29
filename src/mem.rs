@@ -3,7 +3,7 @@ use std::fs;
 
 use colorsys::{Rgb};
 
-use crate::common::{parse_colour_param};
+use crate::common::{parse_colour_param, pct_value_hsl};
 
 #[derive(Debug, PartialEq)]
 pub enum MemAppletError {
@@ -68,8 +68,12 @@ fn normalise_mem_usage(info: &MemInfo) -> f32 {
 pub fn applet(args: &[String]) -> Result<()> {
     let mut colour_s: Option<f32> = None;
     let mut colour_l: Option<f32> = None;
+    let mut show_pct_text: bool = false;
 
     for arg in args {
+        if arg == "pct-text" {
+            show_pct_text = true; continue;
+        }
         if let Some(s) = parse_colour_param(arg, "s") {
             if (0.0..=100.0).contains(&s) {
                 colour_s = Some(s);
@@ -87,8 +91,20 @@ pub fn applet(args: &[String]) -> Result<()> {
     }
 
     let info = read_meminfo()?;
+    let norm = normalise_mem_usage(&info);
 
-    eprintln!("Mem Info: {:?} Pct: {:.2}", info, normalise_mem_usage(&info));
+    eprintln!("Mem Info: {:?} Pct: {:.2}", info, norm);
+
+    let c = pct_value_hsl(norm, colour_s, colour_l);
+    let rgb = Rgb::from(&c);
+
+    if show_pct_text {
+        let val = format!("{:.0}", ((norm * 100.0).round()));
+        print!("#[bg={}]{:>2}", rgb.to_hex_string(), val);
+    } else {
+        print!("#[bg={}]  ", rgb.to_hex_string());
+    }
+    println!("#[default]");
 
     Ok(())
 }

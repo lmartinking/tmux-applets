@@ -43,6 +43,11 @@ available applets:
           l:XX.YY set the lightness  (eg: l:75.0)
 
     mem: show memory usage
+
+        optional parameters:
+          pct-text  show the percentage as text inside the box
+          s:XX.YY   set the saturation (eg: s:50.0)
+          l:XX.YY   set the lightness  (eg: l:75.0)
 ";
 
 fn main() -> Result<()> {
