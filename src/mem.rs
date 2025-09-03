@@ -7,7 +7,7 @@ use crate::common::{parse_colour_param, pct_value_hsl};
 
 #[derive(Debug, PartialEq)]
 pub enum MemAppletError {
-    MemInfoError,
+    MemInfoUnavailable,
 }
 
 impl std::error::Error for MemAppletError {}
@@ -30,7 +30,7 @@ pub struct MemInfo {
 const MEM_INFO_PATH: &str = "/proc/meminfo";
 
 fn read_meminfo() -> Result<MemInfo> {
-    let data = fs::read_to_string(MEM_INFO_PATH).or(Err(MemAppletError::MemInfoError))?;
+    let data = fs::read_to_string(MEM_INFO_PATH).or(Err(MemAppletError::MemInfoUnavailable))?;
 
     let mut info = MemInfo { available: 0, total: 0, used: 0 };
 
@@ -62,7 +62,7 @@ fn read_meminfo() -> Result<MemInfo> {
 }
 
 fn normalise_mem_usage(info: &MemInfo) -> f32 {
-    return info.used as f32 / info.total as f32;
+    info.used as f32 / info.total as f32
 }
 
 pub fn applet(args: &[String]) -> Result<()> {

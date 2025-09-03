@@ -7,7 +7,7 @@ use crate::common::{parse_colour_param, pct_value_hsl};
 
 #[derive(Debug, PartialEq)]
 pub enum PingAppletError {
-    PingMissingHostError,
+    PingMissingHost,
     PingError,
 }
 
@@ -51,7 +51,7 @@ pub fn applet(args: &[String]) -> Result<()> {
             continue;
         }
 
-        if host != "" {
+        if !host.is_empty() {
             eprintln!("Ignoring extra argument: {arg}");
             continue;
         }
@@ -59,8 +59,8 @@ pub fn applet(args: &[String]) -> Result<()> {
         host = arg;
     }
 
-    if host == "" {
-        return Err(PingAppletError::PingMissingHostError);
+    if host.is_empty() {
+        return Err(PingAppletError::PingMissingHost);
     }
 
     eprintln!("Saturation: {:?} Lightness: {:?}", colour_s, colour_l);

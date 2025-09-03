@@ -16,6 +16,7 @@ pub fn parse_colour_param(p: &str, key: &str) -> Option<f32> {
     v.parse::<f32>().ok()
 }
 
+#[allow(clippy::assertions_on_constants)]
 fn pct_to_hue(pct: f32) -> f32 {
     const LEFT_STOP: f32 = 0.0; // Red
     const RIGHT_STOP: f32 = 120.0; // Green

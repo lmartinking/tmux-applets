@@ -4,10 +4,10 @@ use tmux_applets::{cpu, mem, ping};
 
 #[derive(Debug)]
 enum AppletError {
-    MissingArgumentError,
-    CPUAppletError(cpu::CPUAppletError),
-    MemAppletError(mem::MemAppletError),
-    PingAppletError(ping::PingAppletError),
+    MissingArgument,
+    CPUApplet(cpu::CPUAppletError),
+    MemApplet(mem::MemAppletError),
+    PingApplet(ping::PingAppletError),
 }
 
 impl fmt::Display for AppletError {
@@ -18,19 +18,19 @@ impl fmt::Display for AppletError {
 
 impl From<cpu::CPUAppletError> for AppletError {
     fn from(error: cpu::CPUAppletError) -> Self {
-        AppletError::CPUAppletError(error)
+        AppletError::CPUApplet(error)
     }
 }
 
 impl From<mem::MemAppletError> for AppletError {
     fn from(error: mem::MemAppletError) -> Self {
-        AppletError::MemAppletError(error)
+        AppletError::MemApplet(error)
     }
 }
 
 impl From<ping::PingAppletError> for AppletError {
     fn from(error: ping::PingAppletError) -> Self {
-        AppletError::PingAppletError(error)
+        AppletError::PingApplet(error)
     }
 }
 
@@ -72,7 +72,7 @@ fn main() -> Result<()> {
 
     if args.len() == 1 {
         println!("{USAGE}");
-        return Err(AppletError::MissingArgumentError);
+        return Err(AppletError::MissingArgument);
     }
 
     match args[1].as_str() {
@@ -85,7 +85,7 @@ fn main() -> Result<()> {
         "ping" => Ok(ping::applet(&args[2..])?),
         _ => {
             println!("{USAGE}");
-            Err(AppletError::MissingArgumentError)
+            Err(AppletError::MissingArgument)
         }
     }
 }

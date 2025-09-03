@@ -9,8 +9,8 @@ use crate::common::{parse_colour_param, pct_value_hsl};
 
 #[derive(Debug, PartialEq)]
 pub enum CPUAppletError {
-    CPUCountError,
-    CPUInfoError,
+    CPUCount,
+    CPUInfo,
 }
 
 impl std::error::Error for CPUAppletError {}
@@ -26,8 +26,8 @@ type Result<T> = std::result::Result<T, CPUAppletError>;
 pub fn cpu_count() -> Result<u32> {
     let count = match unistd::sysconf(unistd::SysconfVar::_NPROCESSORS_ONLN) {
         Ok(Some(c)) => c as u32,
-        Ok(None) => return Err(CPUAppletError::CPUCountError),
-        Err(_) => return Err(CPUAppletError::CPUCountError),
+        Ok(None) => return Err(CPUAppletError::CPUCount),
+        Err(_) => return Err(CPUAppletError::CPUCount),
     };
     Ok(count)
 }
@@ -71,7 +71,7 @@ fn cpu_info(cpu_index: u32) -> Result<CPUInfo> {
 
     match (read_u32_from_file(&min_freq_path), read_u32_from_file(&max_freq_path), read_u32_from_file(&cur_freq_path)) {
         (Some(min), Some(max), Some(cur)) => Ok(CPUInfo { min_freq: min, max_freq: max, cur_freq: cur }),
-        _ => Err(CPUAppletError::CPUInfoError),
+        _ => Err(CPUAppletError::CPUInfo),
     }
 }
 
