@@ -3,7 +3,7 @@ use std::fs;
 
 use nix::unistd;
 
-use colorsys::{Rgb};
+use colorsys::Rgb;
 
 use crate::common::{parse_colour_param, pct_value_hsl};
 

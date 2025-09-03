@@ -1,12 +1,13 @@
 use std::{env, fmt};
 
-use tmux_applets::{cpu, mem};
+use tmux_applets::{cpu, mem, ping};
 
 #[derive(Debug)]
 enum AppletError {
     MissingArgumentError,
     CPUAppletError(cpu::CPUAppletError),
     MemAppletError(mem::MemAppletError),
+    PingAppletError(ping::PingAppletError),
 }
 
 impl fmt::Display for AppletError {
@@ -24,6 +25,12 @@ impl From<cpu::CPUAppletError> for AppletError {
 impl From<mem::MemAppletError> for AppletError {
     fn from(error: mem::MemAppletError) -> Self {
         AppletError::MemAppletError(error)
+    }
+}
+
+impl From<ping::PingAppletError> for AppletError {
+    fn from(error: ping::PingAppletError) -> Self {
+        AppletError::PingAppletError(error)
     }
 }
 
@@ -48,6 +55,11 @@ available applets:
           pct-text  show the percentage as text inside the box
           s:XX.YY   set the saturation (eg: s:50.0)
           l:XX.YY   set the lightness  (eg: l:75.0)
+
+    ping: ping a host
+
+        required parameters:
+          <host>    the host to ping
 ";
 
 fn main() -> Result<()> {
@@ -65,6 +77,7 @@ fn main() -> Result<()> {
         }
         "mem" => Ok(mem::applet(&args[2..])?),
         "cpu" => Ok(cpu::applet(&args[2..])?),
+        "ping" => Ok(ping::applet(&args[2..])?),
         _ => {
             println!("{USAGE}");
             Err(AppletError::MissingArgumentError)

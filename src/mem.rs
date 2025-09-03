@@ -1,7 +1,7 @@
 use std::fmt;
 use std::fs;
 
-use colorsys::{Rgb};
+use colorsys::Rgb;
 
 use crate::common::{parse_colour_param, pct_value_hsl};
 
@@ -62,7 +62,7 @@ fn read_meminfo() -> Result<MemInfo> {
 }
 
 fn normalise_mem_usage(info: &MemInfo) -> f32 {
-    return info.used as f32 / info.total as f32
+    return info.used as f32 / info.total as f32;
 }
 
 pub fn applet(args: &[String]) -> Result<()> {
@@ -72,7 +72,8 @@ pub fn applet(args: &[String]) -> Result<()> {
 
     for arg in args {
         if arg == "pct-text" {
-            show_pct_text = true; continue;
+            show_pct_text = true;
+            continue;
         }
         if let Some(s) = parse_colour_param(arg, "s") {
             if (0.0..=100.0).contains(&s) {

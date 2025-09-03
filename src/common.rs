@@ -1,4 +1,4 @@
-use colorsys::{Hsl};
+use colorsys::Hsl;
 
 // Parse a colour parameter in the form: `{key}:{val}` where `{val}` is a float
 pub fn parse_colour_param(p: &str, key: &str) -> Option<f32> {
@@ -37,7 +37,7 @@ pub fn pct_value_hsl(norm: f32, s: Option<f32>, l: Option<f32>) -> Hsl {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use colorsys::{Rgb};
+    use colorsys::Rgb;
 
     #[test]
     fn test_hsl_to_rgb_red() {
