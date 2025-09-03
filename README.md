@@ -20,17 +20,18 @@ Currently implemented:
 
  * `cpu`: Show CPU frequency usage
  * `mem`: Show memory usage
-
-TODO:
-
  * `ping`: Ping a host
+
+## Parameters
+
+To see available parameters, run: `tmux-applets --help`
 
 ## Usage in tmux
 
 In `~/.tmux.conf`, edit your status line:
 
 ```
-set-option -ag status-right "#(/path/to/applet <arguments>) #(/path/to/applet2 <arguments>)"
+set-option -g status-right "#(/path/to/tmux-applets <applet> <arguments>) #(/path/to/tmux-applets <applet> <arguments>)"
 ```
 
 For example, in my configuration I have:

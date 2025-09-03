@@ -52,7 +52,7 @@ available applets:
     mem: show memory usage
 
         optional parameters:
-          pct-text  show the percentage as text inside the box
+          pct-text  show the memory usage percentage as text inside the box
           s:XX.YY   set the saturation (eg: s:50.0)
           l:XX.YY   set the lightness  (eg: l:75.0)
 
@@ -60,6 +60,11 @@ available applets:
 
         required parameters:
           <host>    the host to ping
+
+        optional parameters:
+          pct-text  show the percentage as text inside the box
+          s:XX.YY   set the saturation (eg: s:50.0)
+          l:XX.YY   set the lightness  (eg: l:75.0)
 ";
 
 fn main() -> Result<()> {
