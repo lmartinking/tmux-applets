@@ -1,6 +1,8 @@
 # tmux-applets
 
-This is a work-in-progress conversion of the C code to Rust.
+A selection of "applets" to use in your tmux status line, written in Rust 🦀
+
+NOTE: The C code is available on the [`legacy`](https://github.com/lmartinking/tmux-applets/tree/legacy) branch. It is preserved for historical purposes.
 
 ## Requirements
 

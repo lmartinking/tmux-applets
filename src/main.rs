@@ -62,9 +62,10 @@ available applets:
           <host>    the host to ping
 
         optional parameters:
-          pct-text  show the percentage as text inside the box
           s:XX.YY   set the saturation (eg: s:50.0)
           l:XX.YY   set the lightness  (eg: l:75.0)
+
+NOTE: Saturation and Lightness parameters must be in the range [0.0, 100.0]
 ";
 
 fn main() -> Result<()> {
