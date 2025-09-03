@@ -1,5 +1,6 @@
 [package]
 name = "tmux-applets"
+description = 'A selection of "applets" to use in your tmux status line, written in Rust 🦀'
 version = "0.0.1"
 edition = "2024"
 
