@@ -8,7 +8,7 @@ homepage = "https://github.com/lmartinking/tmux-applets"
 documentation = "https://github.com/lmartinking/tmux-applets"
 repository = "https://github.com/lmartinking/tmux-applets"
 authors = ["Lucas Martin-King <lmartinking@gmail.com>"]
-license = "GPLv2"
+license = "GPL-2.0-only"
 
 [dependencies]
 colorsys = "0.7.0"
