@@ -67,6 +67,7 @@ pub fn applet(args: &[String]) -> Result<()> {
     eprintln!("Pinging host: {host}");
 
     let value = match ping_host(host) {
+        // NOTE: These are inverted from what you might expect, as pct_value_hsl grades along a line from green -> red
         Ok(_) => 0.0,
         Err(_) => 1.0,
     };
