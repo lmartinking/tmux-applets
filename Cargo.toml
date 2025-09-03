@@ -10,6 +10,15 @@ repository = "https://github.com/lmartinking/tmux-applets"
 authors = ["Lucas Martin-King <lmartinking@gmail.com>"]
 license = "GPL-2.0-only"
 
+keywords = ["tmux", "tmux-applet"]
+categories = ["command-line-utilities"]
+exclude = ["/.github"]
+
 [dependencies]
 colorsys = "0.7.0"
 nix = { version = "0.30.1", features = ["feature"] }
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+panic = "abort"
