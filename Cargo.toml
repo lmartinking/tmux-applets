@@ -1,0 +1,24 @@
+[package]
+name = "tmux-applets"
+description = 'A selection of "applets" to use in your tmux status line, written in Rust 🦀'
+version = "0.0.1"
+edition = "2024"
+
+homepage = "https://github.com/lmartinking/tmux-applets"
+documentation = "https://github.com/lmartinking/tmux-applets"
+repository = "https://github.com/lmartinking/tmux-applets"
+authors = ["Lucas Martin-King <lmartinking@gmail.com>"]
+license = "GPL-2.0-only"
+
+keywords = ["tmux", "tmux-applet"]
+categories = ["command-line-utilities"]
+exclude = ["/.github"]
+
+[dependencies]
+colorsys = "0.7.0"
+nix = { version = "0.30.1", features = ["feature"] }
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+panic = "abort"
